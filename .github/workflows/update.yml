@@ -33,15 +33,15 @@ jobs:
           python ./zillow_scraper.py
 
       - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v7
+        uses: EndBug/add-and-commit@v9
         id: auto-commit
         with:
-          commit_message: Update data
-          file_pattern: "*.csv"
+          add: 'urls.csv'
+          message: 'Rerun scraper'
 
       - name: Create tag
         uses: StephaneBour/actions-calver@v1.6
-        if: steps.auto-commit.outputs.changes_detected == 'true'
+        if: steps.auto-commit.outputs.committed == 'true'
         with:
           release_branch: main
           release: false
