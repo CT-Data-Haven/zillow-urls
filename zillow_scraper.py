@@ -51,6 +51,7 @@ def main():
         dfs[hdr] = container_to_df(cont)
     all_urls = pd.concat(dfs, names = ['section', 'dataset'])
     print(f'Writing out {all_urls.shape[0]} URLs to {path_out}')
+    all_urls.to_csv(path_out)
     
 if __name__ == '__main__':
     main()
