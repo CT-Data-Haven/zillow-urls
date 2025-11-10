@@ -6,4 +6,3 @@ dependencies:
   - python=3.13
   - selenium
 
-prefix: "./envs"

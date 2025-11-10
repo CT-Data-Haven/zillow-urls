@@ -1,0 +1,49 @@
+name: Run scraper
+on:
+  schedule: 
+    - cron: "0 9 17 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write  
+
+jobs:
+  run-scraper:
+    defaults:
+      run:
+        shell: bash
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v5
+
+    - name: Set up Docker
+      uses: docker/setup-docker-action@v4
+
+    - name: Set up conda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        activate-environment: zillow
+        environment-file: environment.yml
+
+    - name: Run script
+      run: |
+        python ./zillow_scraper.py
+
+    - name: Commit
+      uses: stefanzweifel/git-auto-commit-action@v7
+      id: auto-commit
+      with:
+        commit_message: Update data
+        file_pattern: "*.csv"
+
+    - name: Create tag
+      uses: StephaneBour/actions-calver@v1.6
+      if: steps.auto-commit.outputs.changes_detected == 'true'
+      with:
+        release_branch: main
+        release: false
+
+
+    
