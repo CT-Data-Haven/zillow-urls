@@ -1,0 +1,9 @@
+name: zillow
+channels:
+  - conda-forge
+dependencies:
+  - pandas
+  - python=3.13
+  - selenium
+
+prefix: "./envs"
