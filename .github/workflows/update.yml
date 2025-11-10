@@ -50,3 +50,5 @@ jobs:
         with:
           release_branch: main
           release: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
