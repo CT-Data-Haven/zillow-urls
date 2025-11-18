@@ -45,12 +45,19 @@ jobs:
           add: 'urls.csv'
           message: 'Rerun scraper'
 
-      - name: Create tag
+      - name: Bump tag
         uses: StephaneBour/actions-calver@v1.6
-        if: steps.auto-commit.outputs.committed == 'true'
+        if: steps.auto-commit.outputs.committed == 'true' 
         id: bump-tag
         with:
           release_branch: main
-          release: true
+          release: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push tag
+        uses: actions-ecosystem/action-push-tag@v1
+        if: steps.bump-tag.outputs.release != null
+        id: push-tag
+        with:
+          tag: ${{ steps.bump-tag.outputs.release }}
