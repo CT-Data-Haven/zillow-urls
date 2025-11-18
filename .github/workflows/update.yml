@@ -47,8 +47,9 @@ jobs:
       - name: Create tag
         uses: StephaneBour/actions-calver@v1.6
         if: steps.auto-commit.outputs.committed == 'true'
+        id: bump-tag
         with:
           release_branch: main
-          release: false
+          release: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
