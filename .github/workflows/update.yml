@@ -8,7 +8,7 @@ on:
       - main
     paths:
       - "**/*.py"
-      - ".github"
+      - ".github/**/*.yml"
 
 permissions:
   contents: write
